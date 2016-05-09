@@ -106,8 +106,8 @@ html, body {
   background-color: #a9ce7f;
 }
 .buttons {
-  bottom: 0;
-  right: 0;
+  bottom: 40px;
+  right: 4px;
   position: absolute;
   z-index: 99999;
 }
@@ -168,7 +168,7 @@ html, body {
   top: 0;
   right: 0;
   left: 0;
-  bottom: 0;
+  bottom: 40px;
 }
 
 .editor {
@@ -207,6 +207,11 @@ html, body {
   bottom: 0;
   border-bottom: 1px solid #ddd;
   border-right: 5px solid #f4f5f6;
+  font-size: 0.8em;
+}
+
+.guide > blockquote {
+  padding: 0 20px;
 }
 
 .console iframe {
@@ -223,7 +228,7 @@ html, body {
 /** footer **/
 .footer {
   position: absolute;
-  bottom: -40px;
+  bottom: 0;
   height: 40px;
   font-size: 12px;
   line-height: 40px;
