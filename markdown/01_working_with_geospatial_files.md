@@ -6,7 +6,7 @@ Geospatial data comes in a huge variety of formats. Understanding the formats yo
 
 The [Geospatial Data Abstraction Library (GDAL/OGR)](http://www.gdal.org/) is a set of command-line utilities for working with a wide range of different raster and vector geospatial formats.
 
-The tools are already installed in this lesson, but if you ever need to install them on your own machine you can use:
+**The tools are already installed in this lesson**, but if you ever need to install them on your own machine you can use:
 
 #### OSX
 
@@ -18,7 +18,9 @@ The tools are already installed in this lesson, but if you ever need to install 
 
 ### Getting basic information about a geospatial data file
 
-The `ogrinfo` command from the GDAL toolkit allows us to find out what a geospatial vector data file contains.
+The [`ogrinfo`](http://www.gdal.org/ogrinfo.html) command from the GDAL toolkit allows us to find out what a geospatial vector data file contains.
+
+Use `man ogrinfo` to get detailed help for `ogrinfo` at the command-line.
 
 The `~/data` directory contains 10m resolution countries data from [Natural Earth](www.naturalearthdata.com). If we want to know what layers a file contains, we can run `ogrinfo` like so:
 
