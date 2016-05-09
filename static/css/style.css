@@ -214,6 +214,10 @@ html, body {
   padding: 0 20px;
 }
 
+.guide > pre {
+  font-size: 0.7em;
+}
+
 .console iframe {
   width: 100%;
   height: 100%;
