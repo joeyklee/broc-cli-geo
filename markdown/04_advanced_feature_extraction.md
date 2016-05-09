@@ -29,12 +29,12 @@ $ ogrinfo data/ne_10m_admin_0_countries.shp -q \
 ...
 ```
 
-If you simply want to hide the POLYGON line from the result, you can pipe the output to `grep`:
+When doing advanced filtering, it helps to hide the POLYGON line from the result and page gradually through the output. You can do this by piping the output through [`grep`](https://en.wikipedia.org/wiki/Grep) and [`less`](https://en.wikipedia.org/wiki/Less_(Unix)):
 
 ```
 ogrinfo data/ne_10m_admin_0_countries.shp -q \
   -sql "SELECT * FROM ne_10m_admin_0_countries" \
-  | grep -v POLYGON
+  | grep -v POLYGON | less
 ```
 
 Here, `grep -v` means 'hide lines that match the filter'.
