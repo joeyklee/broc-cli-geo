@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h1 id="making-elevation-contours-from-a-digital-elevation-model-dem-">Making Elevation Contours from a Digital Elevation Model (DEM)</h1>
+<h2 id="about">About</h2>
+<p>Contour lines are handy vector based representations elevation (or any variable). In this module, we will create contour lines from a raster DEM. </p>
+<h2 id="data">Data</h2>
+<ul>
+<li><a href="https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/19/IMG/ned19_n39x50_w120x00_ca_nv_laketahoe_2010.zip">lake Tahoe DEM</a></li>
+</ul>
+<h2 id="process">Process</h2>
+<h3 id="download-the-data">Download the data</h3>
+<p>First things first, download the data. We are going to work with a small DEM from Lake Tahoe, California. We will use the <code>wget</code> command to retrieve the .zip file. To do this, type the following command in the terminal:</p>
+<pre><code>wget &quot;https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/19/IMG/ned19_n39x50_w120x00_ca_nv_laketahoe_2010.zip&quot;
+</code></pre><h3 id="unzip-the-folder">Unzip the folder</h3>
+<p>Now that the data is downloaded, unzip it using the <code>unzip</code> command. The <code>unzip</code> command takes the following arguements:</p>
+<blockquote>
+<p>unzip zipfolder.zip -d outputfoldername</p>
+</blockquote>
+<pre><code>unzip ned19_n39x50_w120x00_ca_nv_laketahoe_2010.zip -d ned19_n39x50_w120x00_ca_nv_laketahoe_2010
+</code></pre><h3 id="now-enter-the-unzipped-folder">Now enter the unzipped folder</h3>
+<p>After the folder has been unzipped, you must change into the directory that the files were unzipped to. Use <code>cd</code> to change to the directory.
+<!--In this case, "ned19_n39x50_w120x00_ca_nv_laketahoe_2010". To do this, use the `cd` command which stands for "change directory".
+--></p>
+<pre><code>cd ned19_n39x50_w120x00_ca_nv_laketahoe_2010
+</code></pre><p>Take a peek inside the folder using the <code>ls</code> command to determine which file is our DEM:</p>
+<pre><code>ls
+</code></pre><p>This will return:</p>
+<blockquote>
+<p>NED_DataDictionary.url
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.dbf
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img.aux.xml
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.prj
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.sbn
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.sbx
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.shp
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010.shx
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010_meta.html
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010_meta.txt
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010_meta.xml
+ned19_n39x50_w120x00_ca_nv_laketahoe_2010_thumb.jpg
+ned19_readme.pdf
+readme.pdf</p>
+</blockquote>
+<p>Our DEM is: <strong>ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img</strong></p>
+<h3 id="create-contour">Create contour</h3>
+<p>We can now use the <code>gdal_contour</code> command to generate the contour lines from the DEM. The <code>gdal_contour</code> command takes a number of arguments, but a minimum execution would include:</p>
+<blockquote>
+<p>gdal_contour -a heightFieldName DEMfile.img outputFileName.shp -i contourInterval</p>
+</blockquote>
+<p>where:</p>
+<ul>
+<li>heightFieldName: The name of the field in the output vector file you want to height to live in.</li>
+<li>DEMfile.img: the name of the input DEM file. Any valid raster format is acceptable here (e.g. .tif, .grid, etc)</li>
+<li>outputFileName.shp: the name of the output shapefile with the contours. The default is contour.shp.</li>
+<li>contourInterval: The contour interval in units of the DEM&#39;s projection. TODO: is it in meters?</li>
+</ul>
+<pre><code>gdal_contour -a height ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img output_contour_25m.shp -i 25.0
+</code></pre><p>If you now list the files in the folder, you will see the &quot;output_contour_25m.shp&quot; file.</p>
+<p>And now you have beautiful contour lines! 🗻</p>
+
+        <div class="navlinks">
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>
