@@ -210,12 +210,16 @@ html, body {
   font-size: 0.8em;
 }
 
-.guide-wrapper > blockquote {
+blockquote {
   padding: 0 20px;
 }
 
-.guide-wrapper > pre {
+pre {
   font-size: 0.7em;
+}
+
+code {
+  color: #8f35b4;
 }
 
 .console iframe {
@@ -241,6 +245,10 @@ html, body {
   overflow: auto;
   text-align: center;
   color: #959ba4;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 .footer a {
   color: #fff;

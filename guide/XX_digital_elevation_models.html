@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper guide-wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h1 id="generate-the-hillshade-slope-shade-and-color-relief">Generate the Hillshade, Slope Shade, and Color Relief</h1>
+<h2 id="about">About</h2>
+<p> Digital Elevation Models (DEM) are raster data about topography. DEM&#39;s do not include features such as trees and buildings and are therefore different from Digital Surface Models (DSM) which include those features. DEM&#39;s are rich sources of data can be used generate hillshades, slope, and relief maps. </p>
+<h2 id="data">Data</h2>
+<ul>
+<li><a href="https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/19/IMG/ned19_n39x50_w120x00_ca_nv_laketahoe_2010.zip">lake Tahoe DEM</a></li>
+</ul>
+<h2 id="process">Process</h2>
+<h3 id="create-a-hillshade">Create a Hillshade</h3>
+<p>We will create a hillshade from the DEM called &quot;ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img&quot;. To do this you can use the <code>gdaldem hillshade</code> command. The <code>gdaldem hillshade</code> command minimally takes the following arguments:</p>
+<blockquote>
+<p>gdaldem hillshade -of PNG inputDEM.tif outputHillshade.png</p>
+</blockquote>
+<p>where</p>
+<ul>
+<li>PNG: the output format. It can also be TIF or others.</li>
+<li>inputDEM.tif: the input DEM raster file. The input can be any valid DEM raster file.</li>
+<li>outputHillshade.png: the output hillshade</li>
+</ul>
+<p>Run the following in the terminal to generate a hillshade:</p>
+<pre><code>gdaldem hillshade -of PNG ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade.png
+</code></pre><h3 id="change-the-hillshade-light-direction">Change the Hillshade Light Direction</h3>
+<p>You can adjust the direction of the light by adding an argument to the <code>-az</code> (Azimuth) flag. Changing the direction of light will change the shadows cast on your DEM.</p>
+<p>Give it a try by running the following:</p>
+<pre><code>gdaldem hillshade -of PNG -az 135 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_az135.png
+</code></pre><!--### Change the Hillshade Vertical exaggeration
+You can adjust the vertical exaggeration of the hillshade by adding an argument to the `-z` (zFactor) flag. The default is 1.
+
+```
+gdaldem hillshade -of PNG -z 1.5 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_z1_5.png-->
+<pre><code>
+### Make a Colored Relief Map
+
+Color relief or hypsometric tints depict elevation as bands of color, to enhance elevation zones so map readers can better see differences in relief. The colors selected for the tints are assumed to relate to the ground cover typically found at various elevations in the area being mapped. A typical color scheme progresses from dark greens for lower elevations up through yellows/browns, and on to grays and white at the highest elevations - [Bjørn Sandvik](http://blog.thematicmapping.org/2012/06/creating-color-relief-and-slope-shading.html). 
+
+In order to create color our DEM, we need to create colored breaks for a selected number of elevation bins. First, let&#39;s check what the min and max values are using the `gdalinfo` command:
+</code></pre><p>gdalinfo ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img </p>
+<pre><code>
+We should get something like this:
+
+&gt; Driver: HFA/Erdas Imagine Images (.img)
+Files: ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img
+       ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img.aux.xml
+Size is 8112, 8112
+Coordinate System is:
+GEOGCS[&quot;GCS_North_American_1983&quot;,
+    DATUM[&quot;North_American_Datum_1983&quot;,
+        SPHEROID[&quot;GRS_1980&quot;,6378137.0,298.257222101]],
+    PRIMEM[&quot;Greenwich&quot;,0.0],
+    UNIT[&quot;Degree&quot;,0.017453292519943295]]
+Origin = (-120.000185185185003,39.500185185185174)
+Pixel Size = (0.000030864197531,-0.000030864197531)
+Corner Coordinates:
+Upper Left  (-120.0001852,  39.5001852) (120d 0&#39; 0.67&quot;W, 39d30&#39; 0.67&quot;N)
+Lower Left  (-120.0001852,  39.2498148) (120d 0&#39; 0.67&quot;W, 39d14&#39;59.33&quot;N)
+Upper Right (-119.7498148,  39.5001852) (119d44&#39;59.33&quot;W, 39d30&#39; 0.67&quot;N)
+Lower Right (-119.7498148,  39.2498148) (119d44&#39;59.33&quot;W, 39d14&#39;59.33&quot;N)
+Center      (-119.8750000,  39.3750000) (119d52&#39;30.00&quot;W, 39d22&#39;30.00&quot;N)
+Band 1 Block=64x64 Type=Float32, ColorInterp=Undefined
+  Description = Layer_1
+  Min=1914.368 Max=3147.452 
+  Minimum=1914.368, Maximum=3147.452, Mean=2476.869, StdDev=289.573
+  NoData Value=-3.4028234663852886e+38
+  Metadata:
+    LAYER_TYPE=athematic
+    STATISTICS_EXCLUDEDVALUES=
+    STATISTICS_MAXIMUM=3147.4521484375
+    STATISTICS_MEAN=2476.8688174219
+    STATISTICS_MEDIAN=0
+    STATISTICS_MINIMUM=1914.3679199219
+    STATISTICS_MODE=0
+    STATISTICS_SKIPFACTORX=1
+    STATISTICS_SKIPFACTORY=1
+    STATISTICS_STDDEV=289.57325845091
+  Image Structure Metadata:
+    COMPRESSION=RLE
+
+
+
+We can see that: `Min=1914.368` and `Max=3147.452`. Using this information we can make some elevation breaks and some corresponding colors for each break. The example below shows how gdal will use apply a color to the pixels with the corresponding elevation.
+</code></pre><p>elev1 r g b
+elev2 r g b
+elev3 r g b
+elev4 r g b
+...</p>
+<pre><code>
+Make a `color-relief.txt` using the `echo` command, like so. In this case, `echo` takes everything between the quotations and stuffs it into a file called `color-relief.txt` usng the `&gt;` operator:
+</code></pre><p>echo &#39;0 0 0 0
+1913 110 220 110
+2407 240 250 160
+2653 230 220 170
+2900 220 220 220
+3148 250 250 250&#39; &gt; color-relief.txt</p>
+<pre><code>
+Now we can generate our colored relief:
+</code></pre><p>gdaldem color-relief -of PNG ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img color-relief.txt ned19_n39x50_w120x00_ca_nv_laketahoe_2010_coloredRelief.png</p>
+<pre><code>
+### Make a Slope Map
+
+#### First create the slope terrain
+We can also use our DEM to create a map of slopes on the terrain. We use the `gdaldem slope` command to achieve this. There are a variety of formats we can export to, but we can&#39;t export `.png`, so in this case we use `GTiff` (`.tif`):
+</code></pre><p>gdaldem slope ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_slope.tif</p>
+<pre><code>
+#### Second make Color Ramp and Create a Colored Relief Map
+
+Using the same method as above, create a color palette for the slope degrees in a file called `color-slope.txt`:
+</code></pre><p>echo &#39;0 255 255 255
+90 0 0 0&#39; &gt; color-slope.txt</p>
+<pre><code>
+Now we can use the `gdal color-relief` command to take our `color-slope.txt` colors and apply them to the slope map generated above:
+</code></pre><p>gdaldem color-relief ned19_n39x50_w120x00_ca_nv_laketahoe_2010_slope.tif color-slope.txt ned19_n39x50_w120x00_ca_nv_laketahoe_2010_slopeShade.tif
+```</p>
+<p>And voila! We&#39;ve now made a hillshade, a colored-relief map, and a slope map!</p>
+
+        <div class="navlinks">
+          <a class="nextp button" href="XX_make_elevation_contours.html">OK, next! &raquo;</a>
+            <a class="lastp navlink" href="04_advanced_feature_extraction.html">&laquo; back</a>
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>
