@@ -84,3 +84,6 @@ where:
 gdal_contour -a height ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img output_contour_25m.shp -i 25.0
 ```
 
+If you now list the files in the folder, you will see the "output_contour_25m.shp" file.
+
+And now you have beautiful contour lines! 🗻
