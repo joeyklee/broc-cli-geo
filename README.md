@@ -8,6 +8,11 @@ Tools and techniques you will learn:
 * TopoJSON
 * more!
 
+### develop the content
+
+If you have an idea for new content, please create an issue to discuss it.
+
+To add content you just add a new .md file in the `/markdown` directory. Take a look at other files in that directory for the naming scheme and layout.
 
 ### build and deploy the frontend
 
