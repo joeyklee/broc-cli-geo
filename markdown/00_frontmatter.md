@@ -4,6 +4,12 @@
 
 > todo!
 
+## Who is this for?
+
+Anyone who wants to learn to work with geospatial data at the UNIX command-line.
+
+You should *already* know command-line basics. If you don't, head over to [the command-line bootcamp](rik.smith-unna.com/command_line_bootcamp) to get up to speed before returning to this bootcamp.
+
 ## How to read this tutorial
 
 Command-line examples that you are meant to type into a terminal window, and the results of those examples, will be shown in a black code block, e.g.
