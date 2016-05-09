@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h2 id="extracting-features-from-vector-files">Extracting features from vector files</h2>
+<p>We can get a closer look at the data in a vector data file by extracting a specific feature:</p>
+<pre><code>$ ogrinfo data/ne_10m_admin_0_countries.shp ne_10m_admin_0_countries -fid 1 -q
+Layer name: ne_10m_admin_0_countries
+OGRFeature(ne_10m_admin_0_countries):1
+  scalerank (Integer) = 0
+  featurecla (String) = Admin-0 country
+  LABELRANK (Real) = 3.00
+  SOVEREIGNT (String) = Afghanistan
+  SOV_A3 (String) = AFG
+  ADM0_DIF (Real) = 0.00
+  LEVEL (Real) = 2.00
+...
+</code></pre><p>Here we used <code>-fid 1</code> to ask for just the <em>first</em> feature, which turned out to be the country Afghanistan. If we wanted the <em>second</em> feature, we would use <code>-fid 2</code>, the <em>third</em> would be <code>-fid 3</code> and so on.</p>
+<p>We also used <code>-q</code> to tell <code>ogrinfo</code> to be &#39;quiet&#39;, meaning it doesn&#39;t print out summary information about the whole file. Try the command without the <code>-q</code> to see the difference.</p>
+<p>We could have asked <code>ogrinfo</code> to do the same thing in a different way, by using an <a href="https://www.codecademy.com/learn/learn-sql">SQL query</a> to specify the column:</p>
+<pre><code>$ ogrinfo data/ne_10m_admin_0_countries.shp -sql &#39;SELECT * FROM ne_10m_admin_0_countries&#39; -fid 1 -q
+</code></pre><p>This might not seem useful, but the SQL query language allows us to ask all kinds of interesting questions.</p>
+
+        <div class="navlinks">
+          <a class="nextp button" href="04_advanced_feature_extraction.html">OK, next! &raquo;</a>
+            <a class="lastp navlink" href="02_inspecting_files.html">&laquo; back</a>
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>

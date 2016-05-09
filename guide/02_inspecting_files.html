@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h2 id="summarising-vector-files">Summarising vector files</h2>
+<p>We can use <code>ogrinfo</code> to get more detailed information about a layer in a vector data file.</p>
+<p>By passing the name of a layer, and using the <code>-so</code> flag, we can ask <code>ogrinfo</code> to display summary information about a layer.</p>
+<pre><code>$ ogrinfo -so data/ne_10m_admin_0_countries.shp ne_10m_admin_0_countries
+INFO: Open of `data/ne_10m_admin_0_countries.shp&#39;
+      using driver `ESRI Shapefile&#39; successful.
+
+Layer name: ne_10m_admin_0_countries
+Geometry: Polygon
+Feature Count: 255
+Extent: (-180.000000, -90.000000) - (180.000000, 83.634101)
+Layer SRS WKT:
+GEOGCS[&quot;GCS_WGS_1984&quot;,
+    DATUM[&quot;WGS_1984&quot;,
+        SPHEROID[&quot;WGS_84&quot;,6378137.0,298.257223563]],
+    PRIMEM[&quot;Greenwich&quot;,0.0],
+    UNIT[&quot;Degree&quot;,0.0174532925199433]]
+scalerank: Integer (4.0)
+featurecla: String (30.0)
+LABELRANK: Real (6.2)
+SOVEREIGNT: String (32.0)
+SOV_A3: String (3.0)
+ADM0_DIF: Real (4.2)
+...
+</code></pre><p>Some basic infomation is given (the geometry, boundary extent, the <a href="https://en.wikipedia.org/wiki/Spatial_reference_system">spatial reference system</a>).</p>
+<p>You can also see that file contains 255 features, and for each feature the following information is listed.</p>
+<ul>
+<li>the name of the feature</li>
+<li>its type <code>Integer</code>, <code>String</code>, <code>Real</code>, etc.</li>
+<li>its length</li>
+</ul>
+<p>Just to be clear, here&#39;s one of the lines with the pieces annotated:</p>
+<pre><code>  name     type    length
+    |        |       |
+scalerank: Integer (4.0)
+</code></pre>
+        <div class="navlinks">
+          <a class="nextp button" href="03_extracting_features.html">OK, next! &raquo;</a>
+            <a class="lastp navlink" href="01_working_with_geospatial_files.html">&laquo; back</a>
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>
