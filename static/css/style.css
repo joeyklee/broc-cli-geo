@@ -210,11 +210,11 @@ html, body {
   font-size: 0.8em;
 }
 
-.guide > blockquote {
+.guide-wrapper > blockquote {
   padding: 0 20px;
 }
 
-.guide > pre {
+.guide-wrapper > pre {
   font-size: 0.7em;
 }
 
