@@ -2,6 +2,12 @@
 
 Learn geo at the unix command-line by using it in your browser.
 
+Tools and techniques you will learn:
+
+* GDAL/OGR
+* TopoJSON
+* more!
+
 
 ### build and deploy the frontend
 
