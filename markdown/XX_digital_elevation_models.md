@@ -41,12 +41,14 @@ Give it a try by running the following:
 gdaldem hillshade -of PNG -az 135 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_az135.png
 ```
 
-<!--### Change the Hillshade Vertical exaggeration
+<!--
+### Change the Hillshade Vertical exaggeration
 You can adjust the vertical exaggeration of the hillshade by adding an argument to the `-z` (zFactor) flag. The default is 1.
 
 ```
-gdaldem hillshade -of PNG -z 1.5 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_z1_5.png-->
+gdaldem hillshade -of PNG -z 1.5 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_z1_5.png
 ```
+-->
 
 ### Make a Colored Relief Map
 
