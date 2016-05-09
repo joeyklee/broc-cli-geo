@@ -8,13 +8,8 @@ The [Geospatial Data Abstraction Library (GDAL/OGR)](http://www.gdal.org/) is a 
 
 **The tools are already installed in this lesson**, but if you ever need to install them on your own machine you can use:
 
-#### OSX
-
-> brew install gdal
-
-#### Linux
-
-> sudo apt-get install gdal-bin
+- OSX: `brew install gdal`
+- Linux: `sudo apt-get install gdal-bin`
 
 ### Getting basic information about a geospatial data file
 
