@@ -1,0 +1,44 @@
+{
+  "name": "geo-commandline-bootcamp",
+  "version": "1.0.0",
+  "description": "an adventure in learning geo at the command-line",
+  "main": "index.js",
+  "scripts": {
+    "render": "submarine markdown guide --template=guide.html",
+    "deploy": "gh-pages-deploy",
+    "build": "browserify index.js -o bundle.js && browserify terminal.js -o terminal-bundle.js",
+    "fixcolor": "sed 's/eeeeec/333333/g' terminal-bundle.js > terminal-bundle.fjs && mv terminal-bundle.fjs terminal-bundle.js",
+    "start": "beefy index.js:bundle.js terminal.js:terminal-bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeyklee/geo-commandline-bootcamp.git"
+  },
+  "author": "Joey Lee, Richard Smith-Unna, Steph Smith-Unna, Aurelia Moser",
+  "license": "MIT",
+  "watch": {
+    "build": "workshop/*.md"
+  },
+  "gh-pages-deploy": {
+    "prep": [
+      "build",
+      "fixcolor",
+      "render"
+    ],
+    "noprompt": "true"
+  },
+  "dependencies": {
+    "adventure-time": "blahah/adventure-time#fixes",
+    "gh-pages-deploy": "^0.1.1",
+    "submarine": "0.2.4"
+  },
+  "devDependencies": {
+    "beefy": "^2.1.1",
+    "browserify": "^6.1.0",
+    "npm-watch": "0.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/joeyklee/geo-commandline-bootcamp/issues"
+  },
+  "homepage": "https://github.com/joeyklee/geo-commandline-bootcamp#readme"
+}
