@@ -8,7 +8,12 @@
 
 Anyone who wants to learn to work with geospatial data at the UNIX command-line.
 
-You should *already* know command-line basics. If you don't, head over to [the command-line bootcamp](rik.smith-unna.com/command_line_bootcamp) to get up to speed before returning to this bootcamp.
+## Prerequisites
+
+You should *already* :
+
+- **know command-line basics**. If you don't, head over to [the command-line bootcamp](rik.smith-unna.com/command_line_bootcamp) to get up to speed before returning to this bootcamp.
+- **be familiar with basic GIS and geospatial concepts**. If you aren't, we recommend following [one of these basic GIS courses](https://www.gislounge.com/learn-gis-for-free/) before returning to this bootcamp.
 
 ## How to read this tutorial
 
