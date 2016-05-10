@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper guide-wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h1 id="raster-cropping-clipping">Raster Cropping &amp; Clipping</h1>
+<h2 id="about">About</h2>
+<p>Often times working with raster data you will only want to work with a subset of the data. The subset of the data might be specified as a bounding box or by the boundaries of a shapefile. In this modules we&#39;ll learn how to crop and clip raster data.</p>
+<h2 id="data">Data</h2>
+<ul>
+<li><a href="https://data.sfgov.org/Geographic-Locations-and-Boundaries/Neighborhood-Groups-Map/iacs-ws63">SF Neighborhood Data - SF Open Data</a></li>
+<li><a href="ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NAIP/ca_2014/37122/m_3712213_se_10_1_20140613_20140923.jp2">San Francisco NAIP Data</a></li>
+</ul>
+<h2 id="process">Process</h2>
+<h3 id="clip-raster-by-bounding-box">Clip raster by bounding box</h3>
+<p>You can clip a raster by a specified bounding box. The coordinates will be based on the projection of the raster data, so if you need to, take a peek using the <code>gdalinfo</code> command. If you know the coordinates you&#39;d like to clip to, you can input them as arguments of <code>gdalwarp</code>:</p>
+<blockquote>
+<p>gdalwarp -te <x_min> <y_min> <x_max> <y_max> input.tif clipped_output.tif</p>
+</blockquote>
+<p>where: </p>
+<ul>
+<li>-te: the flag specifying the clipping boundaries</li>
+<li>x_min: the minimum x value of the clipping bounds</li>
+<li>y_min: the minimum y value of the clipping bounds</li>
+<li>x_max: the maximum x value of the clipping bounds</li>
+<li>y_max: the maximum y value of the clipping bounds</li>
+<li>input.tif: the input file to be clipped</li>
+<li>clipped_output.tif: the clipped output file</li>
+</ul>
+<p>Let&#39;s clip our <code>sf_4269.tif</code> file with a set of coordinates:</p>
+<pre><code>gdalwarp -te -122.4267 37.7492 -122.4029 37.769 sf_4269.tif sf_4269-clippedByCoords.tif
+</code></pre><p>You may notice a black line - this indicates no data values since our bounding box was beyond the image bounds.</p>
+<h3 id="clip-raster-to-shp-nodata-for-pixels-beyond-polygon-boundary">Clip raster to SHP / NoData for pixels beyond polygon boundary</h3>
+<p>We can use a shapefile to clip out a subset of the raster data.</p>
+<blockquote>
+<p>gdalwarp -dstnodata <nodata_value> -cutline input_polygon.shp input.tif clipped_output.tif</p>
+</blockquote>
+<p>where:</p>
+<ul>
+<li>-dstnodata: the flag specifying what the value of no data should be</li>
+<li><nodata_value>: the value of the no data pixels </li>
+<li>-cutline: the flag specifying to use a .shp file to cut the raster</li>
+<li>input_polygon.shp: a shapefile with the bounds to cut the raster to</li>
+<li>input.tif: the input raster file</li>
+<li>clipped_output.tif: the clipped output raster file</li>
+</ul>
+<p>Let&#39;s clip the <code>sf_4269.tif</code> to the boundary of <code>downtown.shp</code>:</p>
+<pre><code>gdalwarp -dstnodata -9999 -cutline downtown.shp sf_4269.tif sf_4269-downtown.tif
+</code></pre><h3 id="crop-raster-dimensions-to-vector-bounding-box">Crop raster dimensions to vector bounding box</h3>
+<p>We can also use the bounding box of a vector file to crop our raster data. </p>
+<!--This will return a squareish image where only the pixels within the bounds of the vector will be shown and the outsides will have nodata-->
+<blockquote>
+<p>gdalwarp -cutline input_polygon.shp -crop_to_cutline input.tif cropped_output.tif</p>
+</blockquote>
+<p>where:</p>
+<ul>
+<li>-cutline: the flag specifying to use a .shp file to cut the raster</li>
+<li>input_polygon.shp: a shapefile with the bounds to cut the raster to</li>
+<li>-crop_to_cutline: the flag specifying to use the bounding box of the input_polygon.shp</li>
+<li>input.tif: the input raster file</li>
+<li>cropped_output.tif: the cropped output raster file</li>
+</ul>
+<pre><code>gdalwarp -cutline downtown.shp -crop_to_cutline sf_4269.tif sf_4269-downtownBounds.tif
+</code></pre>
+        <div class="navlinks">
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>

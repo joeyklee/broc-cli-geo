@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper guide-wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h1 id="merge-rasters">Merge rasters</h1>
+<h2 id="gdal_warp">gdal_warp</h2>
+<p>You can use <code>gdalwarp</code> to merge the images together:</p>
+<blockquote>
+<p>gdalwarp input1.tif input2.tif merged.tif</p>
+</blockquote>
+<p>where:</p>
+<ul>
+<li>input1.tif input2.tif ...: the input files</li>
+<li>merged.tif: the merged output </li>
+</ul>
+<p>Give it a try here:</p>
+<pre><code>gdalwarp sf_4269-nobhill.tif sf_4269-chinatown.tif sf_4269-downtown.tif sf-merged.tif
+</code></pre><p>Or, to preserve nodata values:</p>
+<p>gdalwarp input1.tif input2.tif merged.tif -srcnodata <nodata_value> -dstnodata <merged_nodata_value></p>
+<!--## gdal_merge
+
+You can mosaic multiple images to one image by using the `gdal_merge.py` command:
+
+
+> gdal_merge.py -o merged.tif input1.tif input2.tif
+
+where:
+
+* -o: the flag for "output"
+* merged.tif: the name of the merged file
+* input1 input2 ...: the input files for merging
+
+
+Give it a try:
+
+```
+gdal_merge.py -o sf-merged.tif sf_4269-chinatown.tif sf_4269-downtown.tif
+```
+-->
+
+        <div class="navlinks">
+          <a class="nextp button" href="XX_raster_basics.html">OK, next! &raquo;</a>
+            <a class="lastp navlink" href="XX_digital_elevation_models.html">&laquo; back</a>
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>

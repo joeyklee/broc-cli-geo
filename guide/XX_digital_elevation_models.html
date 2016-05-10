@@ -17,11 +17,11 @@
 <p> Digital Elevation Models (DEM) are raster data about topography. DEM&#39;s do not include features such as trees and buildings and are therefore different from Digital Surface Models (DSM) which include those features. DEM&#39;s are rich sources of data can be used generate hillshades, slope, and relief maps. </p>
 <h2 id="data">Data</h2>
 <ul>
-<li><a href="https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/19/IMG/ned19_n39x50_w120x00_ca_nv_laketahoe_2010.zip">lake Tahoe DEM</a></li>
+<li><a href="https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/GridFloat/n38w123.zip">SF Digital Elevation Model</a></li>
 </ul>
 <h2 id="process">Process</h2>
 <h3 id="create-a-hillshade">Create a Hillshade</h3>
-<p>We will create a hillshade from the DEM called &quot;ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img&quot;. To do this you can use the <code>gdaldem hillshade</code> command. The <code>gdaldem hillshade</code> command minimally takes the following arguments:</p>
+<p>We will create a hillshade from the DEM called <code>sf-dem.tif</code>. To do this you can use the <code>gdaldem hillshade</code> command. The <code>gdaldem hillshade</code> command minimally takes the following arguments:</p>
 <blockquote>
 <p>gdaldem hillshade -of PNG inputDEM.tif outputHillshade.png</p>
 </blockquote>
@@ -32,103 +32,103 @@
 <li>outputHillshade.png: the output hillshade</li>
 </ul>
 <p>Run the following in the terminal to generate a hillshade:</p>
-<pre><code>gdaldem hillshade -of PNG ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade.png
+<pre><code>gdaldem hillshade -of PNG sf-dem.tif sf-dem-hillshade-default.png
 </code></pre><h3 id="change-the-hillshade-light-direction">Change the Hillshade Light Direction</h3>
 <p>You can adjust the direction of the light by adding an argument to the <code>-az</code> (Azimuth) flag. Changing the direction of light will change the shadows cast on your DEM.</p>
 <p>Give it a try by running the following:</p>
-<pre><code>gdaldem hillshade -of PNG -az 135 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_az135.png
-</code></pre><!--### Change the Hillshade Vertical exaggeration
+<pre><code>gdaldem hillshade -of PNG -az 135 sf-dem.tif sf-dem-hillshade-az135.png
+</code></pre><!--
+### Change the Hillshade Vertical exaggeration
 You can adjust the vertical exaggeration of the hillshade by adding an argument to the `-z` (zFactor) flag. The default is 1.
 
 ```
-gdaldem hillshade -of PNG -z 1.5 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_z1_5.png-->
-<pre><code>
-### Make a Colored Relief Map
-
-Color relief or hypsometric tints depict elevation as bands of color, to enhance elevation zones so map readers can better see differences in relief. The colors selected for the tints are assumed to relate to the ground cover typically found at various elevations in the area being mapped. A typical color scheme progresses from dark greens for lower elevations up through yellows/browns, and on to grays and white at the highest elevations - [Bjørn Sandvik](http://blog.thematicmapping.org/2012/06/creating-color-relief-and-slope-shading.html). 
-
-In order to create color our DEM, we need to create colored breaks for a selected number of elevation bins. First, let&#39;s check what the min and max values are using the `gdalinfo` command:
-</code></pre><p>gdalinfo ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img </p>
-<pre><code>
-We should get something like this:
-
-&gt; Driver: HFA/Erdas Imagine Images (.img)
-Files: ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img
-       ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img.aux.xml
-Size is 8112, 8112
+gdaldem hillshade -of PNG -z 1.5 ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_hillshade_z1_5.png
+```
+-->
+<h3 id="make-a-colored-relief-map">Make a Colored Relief Map</h3>
+<p>Color relief or hypsometric tints depict elevation as bands of color, to enhance elevation zones so map readers can better see differences in relief. The colors selected for the tints are assumed to relate to the ground cover typically found at various elevations in the area being mapped. A typical color scheme progresses from dark greens for lower elevations up through yellows/browns, and on to grays and white at the highest elevations - <a href="http://blog.thematicmapping.org/2012/06/creating-color-relief-and-slope-shading.html">Bjørn Sandvik</a>. </p>
+<p>In order to create color our DEM, we need to create colored breaks for a selected number of elevation bins. First, let&#39;s check what the min and max values are using the <code>gdalinfo</code> command with the <code>-stats</code> flag:</p>
+<pre><code>gdalinfo sf-dem.tif -stats
+</code></pre><p>We should get something like this:</p>
+<pre><code>Josephs-MacBook-Pro-2:XX_digital_elevation_models Jozo$ gdalinfo sf-dem.tif -stats
+Driver: GTiff/GeoTIFF
+Files: sf-dem.tif
+Size is 676, 675
 Coordinate System is:
-GEOGCS[&quot;GCS_North_American_1983&quot;,
+GEOGCS[&quot;NAD83&quot;,
     DATUM[&quot;North_American_Datum_1983&quot;,
-        SPHEROID[&quot;GRS_1980&quot;,6378137.0,298.257222101]],
-    PRIMEM[&quot;Greenwich&quot;,0.0],
-    UNIT[&quot;Degree&quot;,0.017453292519943295]]
-Origin = (-120.000185185185003,39.500185185185174)
-Pixel Size = (0.000030864197531,-0.000030864197531)
+        SPHEROID[&quot;GRS 1980&quot;,6378137,298.2572221010002,
+            AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],
+        TOWGS84[0,0,0,0,0,0,0],
+        AUTHORITY[&quot;EPSG&quot;,&quot;6269&quot;]],
+    PRIMEM[&quot;Greenwich&quot;,0],
+    UNIT[&quot;degree&quot;,0.0174532925199433],
+    AUTHORITY[&quot;EPSG&quot;,&quot;4269&quot;]]
+Origin = (-122.437530223697820,37.812525827311823)
+Pixel Size = (0.000092539239086,-0.000092652993030)
+Metadata:
+  AREA_OR_POINT=Area
+Image Structure Metadata:
+  INTERLEAVE=BAND
 Corner Coordinates:
-Upper Left  (-120.0001852,  39.5001852) (120d 0&#39; 0.67&quot;W, 39d30&#39; 0.67&quot;N)
-Lower Left  (-120.0001852,  39.2498148) (120d 0&#39; 0.67&quot;W, 39d14&#39;59.33&quot;N)
-Upper Right (-119.7498148,  39.5001852) (119d44&#39;59.33&quot;W, 39d30&#39; 0.67&quot;N)
-Lower Right (-119.7498148,  39.2498148) (119d44&#39;59.33&quot;W, 39d14&#39;59.33&quot;N)
-Center      (-119.8750000,  39.3750000) (119d52&#39;30.00&quot;W, 39d22&#39;30.00&quot;N)
-Band 1 Block=64x64 Type=Float32, ColorInterp=Undefined
-  Description = Layer_1
-  Min=1914.368 Max=3147.452 
-  Minimum=1914.368, Maximum=3147.452, Mean=2476.869, StdDev=289.573
-  NoData Value=-3.4028234663852886e+38
+Upper Left  (-122.4375302,  37.8125258) (122d26&#39;15.11&quot;W, 37d48&#39;45.09&quot;N)
+Lower Left  (-122.4375302,  37.7499851) (122d26&#39;15.11&quot;W, 37d44&#39;59.95&quot;N)
+Upper Right (-122.3749737,  37.8125258) (122d22&#39;29.91&quot;W, 37d48&#39;45.09&quot;N)
+Lower Right (-122.3749737,  37.7499851) (122d22&#39;29.91&quot;W, 37d44&#39;59.95&quot;N)
+Center      (-122.4062520,  37.7812554) (122d24&#39;22.51&quot;W, 37d46&#39;52.52&quot;N)
+Band 1 Block=676x3 Type=Float32, ColorInterp=Gray
+  Minimum=-2.314, Maximum=126.607, Mean=19.995, StdDev=24.762
+  NoData Value=-9999
   Metadata:
-    LAYER_TYPE=athematic
-    STATISTICS_EXCLUDEDVALUES=
-    STATISTICS_MAXIMUM=3147.4521484375
-    STATISTICS_MEAN=2476.8688174219
-    STATISTICS_MEDIAN=0
-    STATISTICS_MINIMUM=1914.3679199219
-    STATISTICS_MODE=0
-    STATISTICS_SKIPFACTORX=1
-    STATISTICS_SKIPFACTORY=1
-    STATISTICS_STDDEV=289.57325845091
-  Image Structure Metadata:
-    COMPRESSION=RLE
-
-
-
-We can see that: `Min=1914.368` and `Max=3147.452`. Using this information we can make some elevation breaks and some corresponding colors for each break. The example below shows how gdal will use apply a color to the pixels with the corresponding elevation.
-</code></pre><p>elev1 r g b
+    STATISTICS_MAXIMUM=126.60684204102
+    STATISTICS_MEAN=19.995340656419
+    STATISTICS_MINIMUM=-2.3140776157379
+    STATISTICS_STDDEV=24.762441881228
+</code></pre><p>We can see that: <code>Min=-2.4</code> and <code>Max=126.7</code>. Using this information we can make some elevation breaks and some corresponding colors for each break. The example below shows how gdal will use apply a color to the pixels with the corresponding elevation.</p>
+<pre><code>elev1 r g b
 elev2 r g b
 elev3 r g b
 elev4 r g b
-...</p>
-<pre><code>
-Make a `color-relief.txt` using the `echo` command, like so. In this case, `echo` takes everything between the quotations and stuffs it into a file called `color-relief.txt` usng the `&gt;` operator:
-</code></pre><p>echo &#39;0 0 0 0
-1913 110 220 110
-2407 240 250 160
-2653 230 220 170
-2900 220 220 220
-3148 250 250 250&#39; &gt; color-relief.txt</p>
-<pre><code>
-Now we can generate our colored relief:
-</code></pre><p>gdaldem color-relief -of PNG ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img color-relief.txt ned19_n39x50_w120x00_ca_nv_laketahoe_2010_coloredRelief.png</p>
-<pre><code>
-### Make a Slope Map
-
-#### First create the slope terrain
-We can also use our DEM to create a map of slopes on the terrain. We use the `gdaldem slope` command to achieve this. There are a variety of formats we can export to, but we can&#39;t export `.png`, so in this case we use `GTiff` (`.tif`):
-</code></pre><p>gdaldem slope ned19_n39x50_w120x00_ca_nv_laketahoe_2010.img ned19_n39x50_w120x00_ca_nv_laketahoe_2010_slope.tif</p>
-<pre><code>
-#### Second make Color Ramp and Create a Colored Relief Map
-
-Using the same method as above, create a color palette for the slope degrees in a file called `color-slope.txt`:
-</code></pre><p>echo &#39;0 255 255 255
-90 0 0 0&#39; &gt; color-slope.txt</p>
-<pre><code>
-Now we can use the `gdal color-relief` command to take our `color-slope.txt` colors and apply them to the slope map generated above:
-</code></pre><p>gdaldem color-relief ned19_n39x50_w120x00_ca_nv_laketahoe_2010_slope.tif color-slope.txt ned19_n39x50_w120x00_ca_nv_laketahoe_2010_slopeShade.tif
-```</p>
-<p>And voila! We&#39;ve now made a hillshade, a colored-relief map, and a slope map!</p>
+...
+</code></pre><p>Make a <code>color-relief.txt</code> using the <code>echo</code> command, like so. In this case, <code>echo</code> takes everything between the quotations and stuffs it into a file called <code>color-relief.txt</code> usng the <code>&gt;</code> operator:</p>
+<pre><code>echo &#39;0 0 0 0
+26 110 220 110
+51 240 250 160
+76 230 220 170
+101 220 220 220
+127 250 250 250&#39; &gt; color-relief.txt
+</code></pre><p>Now we can generate our colored relief:</p>
+<pre><code>gdaldem color-relief -of PNG sf-dem.tif color-relief.txt sf-dem-coloredRelief.tif
+</code></pre><h3 id="make-a-slope-map">Make a Slope Map</h3>
+<h4 id="first-create-the-slope-terrain">First create the slope terrain</h4>
+<p>We can also use our DEM to create a map of slopes on the terrain. We use the <code>gdaldem slope</code> command to achieve this. There are a variety of formats we can export to, but we can&#39;t export <code>.png</code>, so in this case we use <code>GTiff</code> (<code>.tif</code>):</p>
+<pre><code>gdaldem slope sf-dem.tif sf-dem-slope.tif
+</code></pre><h4 id="second-make-color-ramp-and-create-a-colored-relief-map">Second make Color Ramp and Create a Colored Relief Map</h4>
+<p>Using the same method as above, create a color palette for the slope degrees in a file called <code>color-slope.txt</code>:</p>
+<pre><code>echo &#39;0 255 255 255
+90 0 0 0&#39; &gt; color-slope.txt
+</code></pre><p>Now we can use the <code>gdal color-relief</code> command to take our <code>color-slope.txt</code> colors and apply them to the slope map generated above:</p>
+<pre><code>gdaldem color-relief sf-dem-coloredRelief.tif color-slope.txt sf-dem-slopeShade.tif
+</code></pre><p>And voila! We&#39;ve now made a hillshade, a colored-relief map, and a slope map!</p>
+<h3 id="last-let-s-make-a-contour-map-">Last, let&#39;s make a contour map:</h3>
+<p>We can now use the <code>gdal_contour</code> command to generate the contour lines from the DEM. The <code>gdal_contour</code> command takes a number of arguments, but a minimum execution would include:</p>
+<blockquote>
+<p>gdal_contour -a heightFieldName DEMfile.img outputFileName.shp -i contourInterval</p>
+</blockquote>
+<p>where:</p>
+<ul>
+<li>heightFieldName: The name of the field in the output vector file you want to height to live in.</li>
+<li>DEMfile.img: the name of the input DEM file. Any valid raster format is acceptable here (e.g. .tif, .grid, etc)</li>
+<li>outputFileName.shp: the name of the output shapefile with the contours. The default is contour.shp.</li>
+<li>contourInterval: The contour interval in units of the DEM&#39;s projection. TODO: is it in meters?</li>
+</ul>
+<pre><code>gdal_contour -a height sf-dem.tif output_contour_10m.shp -i 10.0
+</code></pre><p>If you now list the files in the folder, you will see the &quot;output_contour_25m.shp&quot; file.</p>
+<p>And now you have beautiful contour lines! 🗻</p>
 
         <div class="navlinks">
-          <a class="nextp button" href="XX_make_elevation_contours.html">OK, next! &raquo;</a>
-            <a class="lastp navlink" href="04_advanced_feature_extraction.html">&laquo; back</a>
+          <a class="nextp button" href="XX_merge_rasters.html">OK, next! &raquo;</a>
+            <a class="lastp navlink" href="14_export_raster_for_google_earth.html">&laquo; back</a>
         </div>
     </section>
   </div>

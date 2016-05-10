@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper guide-wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h3 id="convert-between-raster-formats">Convert between raster formats</h3>
+<p>You may prefer to work in one type of raster data versus another. Use the <code>gdal_translate</code> command to convert from one raster type to another:</p>
+<blockquote>
+<p>gdal_translate -of GTiff input.grd output.tif</p>
+</blockquote>
+<p>where:</p>
+<ul>
+<li><code>-of</code> means &quot;output file type&quot;</li>
+<li><code>GTiff</code> here we&#39;re specifying geotiff as our output</li>
+<li><code>input.grd</code> this is the input file we want to convert. It is .grd type.</li>
+<li><code>output.tif</code> this is the output file we want. Here we are outputting a .tif file.</li>
+</ul>
+<p>Let&#39;s convert our &quot;sf.tif&quot; to &quot;sf.png&quot;:</p>
+<pre><code>gdal_translate -of PNG sf_4269.tif sf_4269.png
+</code></pre>
+        <div class="navlinks">
+          <a class="nextp button" href="13_reprojecting_raster_data.html">OK, next! &raquo;</a>
+            <a class="lastp navlink" href="11_inspecting_rasters.html">&laquo; back</a>
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>

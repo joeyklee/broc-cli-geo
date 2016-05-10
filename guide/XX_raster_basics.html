@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submarine</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
+</head>
+<body>
+  <div class="wrapper guide-wrapper">
+
+      <section class="content">
+        <p><a href="index.html">table of contents</a></p>
+      <h1 id="basic-raster-operations">Basic Raster operations</h1>
+<h2 id="about">About</h2>
+<p>GDAL has a suite of handy commands for working with raster data. In this module, we will learn to:</p>
+<ul>
+<li>inspect raster data,</li>
+<li>convert between raster formats</li>
+<li>reproject rasters to different projections</li>
+<li>and export a raster to Google Earth</li>
+</ul>
+<h2 id="data">Data</h2>
+<ul>
+<li><a href="ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NAIP/ca_2014/37122/m_3712213_se_10_1_20140613_20140923.jp2">San Francisco NAIP Data</a></li>
+</ul>
+<h2 id="handy-commands">Handy Commands</h2>
+<!--
+### Force creation of world file (requires libgeotiff)
+```
+listgeo -tfw mappy.tif
+```
+-->
+<!--
+### Convert 16-bit bands (Int16 or UInt16) to Byte type
+(Useful for Landsat 8 imagery...)
+
+gdal_translate -of "GTiff" -co "COMPRESS=LZW" -scale 0 65535 0 255 -ot Byte input_uint16.tif output_byte.tif
+
+You can change '0' and '65535' to your image's actual min/max values to preserve more color variation or to apply the scaling to other band types - find that number with:
+
+gdalinfo -mm input.tif | grep Min/Max
+-->
+<!--### Convert a directory of raster files of the same format to another raster format
+
+There are times when working with raster data that you will have multiple types of data formats in one project. You can convert a directory of raster files of the same format to another raster format using this handy command:
+
+basename -s.img *.img | xargs -n1 -I % gdal_translate -of "GTiff" %.img %.tif-->
+
+        <div class="navlinks">
+          <a class="nextp button" href="XX_raster_cropping_and_clipping.html">OK, next! &raquo;</a>
+            <a class="lastp navlink" href="XX_merge_rasters.html">&laquo; back</a>
+        </div>
+    </section>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+  <script>
+    function neaten(str) {
+      var pieces = str.split('_');
+      var s = pieces[1];
+      s = s.charAt(0).toUpperCase() + s.slice(1);
+      pieces[1] = s;
+      return pieces.join(' ');
+    }
+    $('.toc-list li a').text(function() {
+      return neaten($(this).text());
+    });
+  </script>
+</body>
+</html>
