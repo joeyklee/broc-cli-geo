@@ -25,6 +25,9 @@ USER learner
 ENV HOME /home/learner
 WORKDIR /home/learner
 
+# get the data
+RUN cd && wget https://zenodo.org/record/51268/files/geo_data.tar.gz && tar xf geo_data.tar.gz && mv geo_data/* . && rmdir geo_data
+
 # install nvm
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
 

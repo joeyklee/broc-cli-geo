@@ -15,7 +15,7 @@ i.e with to find all the features in ne_10m_admin_0_countries where the NAME is 
 Let's try it:
 
 ```
-$ ogrinfo data/ne_10m_admin_0_countries.shp -q \
+$ ogrinfo countries/ne_10m_admin_0_countries.shp -q \
   -sql "SELECT * FROM ne_10m_admin_0_countries WHERE SOVEREIGNT = 'Afghanistan'"
   Layer name: ne_10m_admin_0_countries
   OGRFeature(ne_10m_admin_0_countries):1
@@ -29,15 +29,15 @@ $ ogrinfo data/ne_10m_admin_0_countries.shp -q \
 ...
 ```
 
-When doing advanced filtering, it helps to hide the POLYGON line from the result and page gradually through the output. You can do this by piping the output through [`grep`](https://en.wikipedia.org/wiki/Grep) and [`less`](https://en.wikipedia.org/wiki/Less_(Unix)):
+When doing advanced filtering, it can help to hide the POLYGON line from the result and page gradually through the output. You can do this by piping the output through [`grep`](https://en.wikipedia.org/wiki/Grep) and [`less`](https://en.wikipedia.org/wiki/Less_(Unix)):
 
 ```
-ogrinfo data/ne_10m_admin_0_countries.shp -q \
+ogrinfo countries/ne_10m_admin_0_countries.shp -q \
   -sql "SELECT * FROM ne_10m_admin_0_countries" \
   | grep -v POLYGON | less
 ```
 
-Here, `grep -v` means 'hide lines that match the filter'.
+Here, `grep -v` means 'hide lines that match the filter'. You can exit the paging view by pressing `q`.
 
 Here are some other queries you can try that should help you see some of the power of SQL:
 

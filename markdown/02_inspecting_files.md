@@ -5,8 +5,8 @@ We can use `ogrinfo` to get more detailed information about a layer in a vector 
 By passing the name of a layer, and using the `-so` flag, we can ask `ogrinfo` to display summary information about a layer.
 
 ```
-$ ogrinfo -so data/ne_10m_admin_0_countries.shp ne_10m_admin_0_countries
-INFO: Open of `data/ne_10m_admin_0_countries.shp'
+$ ogrinfo -so countries/ne_10m_admin_0_countries.shp ne_10m_admin_0_countries
+INFO: Open of `countries/ne_10m_admin_0_countries.shp'
       using driver `ESRI Shapefile' successful.
 
 Layer name: ne_10m_admin_0_countries

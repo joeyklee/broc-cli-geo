@@ -71,10 +71,10 @@ npm install --global docker-browser-server
 
 # setup docker
 docker pull ubuntu
-git clone https://github.com/Blahah/command_line_bootcamp.git
+git clone https://github.com/joeyklee/command_line_bootcamp.git
 cd command_line_bootcamp
-docker build -t "command_line_bootcamp" .
-docker-browser-server command_line_bootcamp -p 8080
+docker build -t "geo_commandline_bootcamp" .
+docker-browser-server geo_commandline_bootcamp -p 8081
 ```
 
 ### cleaning up long-running containers
