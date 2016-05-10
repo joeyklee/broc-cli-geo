@@ -1,5 +1,6 @@
 # this Dockerfile sets up the command-line bootcamp Docker image
 # usage:
+
 # docker build -t "command_line_bootcamp" .
 # docker-browser-server command_line_bootcamp -p 8080
 
@@ -15,6 +16,15 @@ RUN cd && cp -R .bashrc .profile /home/learner
 
 # setup the user directory
 RUN chown -R learner:learner /home/learner
+=======
+# docker build -t "geo_commandline_bootcamp" .
+# docker-browser-server geo_commandline_bootcamp -p 8081
+
+FROM command_line_bootcamp
+
+USER root
+RUN apt-get update && apt-get install -y gdal-bin wget
+
 
 # become the learner
 USER learner
@@ -23,6 +33,7 @@ ENV HOME /home/learner
 WORKDIR /home/learner
 
 # get the data
+
 RUN cd && wget https://zenodo.org/record/51268/files/geo_data.tar.gz && tar xf geo_data.tar.gz && mv geo_data/* . && rmdir geo_data
 
 # install nvm
@@ -43,3 +54,8 @@ RUN echo "expose-fs >> .fs.out 2>> .fs.err &" >> /home/learner/.bashrc
 
 # more readable terminal prompt
 RUN echo "export PS1=\"\[$(tput bold)\]\[\033[38;5;75m\]\u\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;232m\]@:\[$(tput sgr0)\]\[\033[38;5;9m\]\W\[$(tput sgr0)\]\[\033[38;5;232m\]\\$\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\"" >> /home/learner/.bashrc
+=======
+RUN cd && wget –quiet https://zenodo.org/record/51268/files/geo_data.tar.gz && tar xf geo_data.tar.gz && mv geo_data/* .
+RUN cd && rmdir geo_data a_directory another_directory
+RUN cd && rm geo_data.tar.gz
+
