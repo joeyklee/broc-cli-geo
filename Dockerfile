@@ -8,7 +8,7 @@ FROM ubuntu
 RUN apt-get update && apt-get install -y curl git python build-essential nano man
 
 # install software
-apt-get intsall -y gdal-bin
+RUN apt-get install -y gdal-bin
 
 # create a non-root user
 RUN useradd -ms /bin/bash learner
