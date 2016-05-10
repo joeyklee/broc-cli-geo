@@ -15,4 +15,6 @@ ENV HOME /home/learner
 WORKDIR /home/learner
 
 # get the data
-RUN cd && wget –quiet https://zenodo.org/record/51268/files/geo_data.tar.gz && tar xf geo_data.tar.gz && mv geo_data/* . && rmdir geo_data
+RUN cd && wget –quiet https://zenodo.org/record/51268/files/geo_data.tar.gz && tar xf geo_data.tar.gz && mv geo_data/* .
+RUN cd && rmdir geo_data a_directory another_directory
+RUN cd && rm geo_data.tar.gz
