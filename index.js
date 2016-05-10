@@ -12,12 +12,12 @@ if (!qs.id) {
 var opts = {
   guide: 'guide/',
   console: 'terminal.html',
-  server: "46.101.11.144:8080",
+  server: '46.101.11.144:8081',
   id: qs.id
 }
 
 if (!qs.server) qs.server = opts.server
 
-opts.console += '?'+querystring.stringify(qs)
+opts.console += '?' + querystring.stringify(qs)
 
-var adventure = adventureTime(opts)
+adventureTime(opts)
