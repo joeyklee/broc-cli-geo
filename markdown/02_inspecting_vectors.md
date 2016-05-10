@@ -1,4 +1,4 @@
-## Summarising vector files
+## Inspecting vector files
 
 We can use `ogrinfo` to get more detailed information about a layer in a vector data file.
 

@@ -1,8 +1,8 @@
-## Working with geospatial data formats
+## Working with vector files
 
-Geospatial data comes in a huge variety of formats. Understanding the formats you might find in the wild, how to recognise and inspect them are key skills for geospatial analysis at the command-line.
+Geospatial data comes in a huge variety of formats. Understanding the formats you might find in the wild, how to recognise and inspect them are key skills for geospatial analysis at the command-line. Here we'll focus on vector files.
 
-The `~/countries` directory contains 10m resolution countries data in various formats from [Natural Earth](www.naturalearthdata.com). You can see the files by running [`ls`](https://en.wikipedia.org/wiki/Ls):
+The `~/countries` directory contains 10m resolution countries data in shapefile format from [Natural Earth](www.naturalearthdata.com). Shapefiles are a very common vector format for geospatial data. A shapefile is actually a `.shp` file and a collection of supporting files - you can see the files by running [`ls`](https://en.wikipedia.org/wiki/Ls):
 
 ```
 $ ls -1 countries
@@ -19,10 +19,11 @@ ne_10m_admin_0_countries.VERSION.txt
 
 The [Geospatial Data Abstraction Library (GDAL/OGR)](http://www.gdal.org/) is a set of command-line utilities for working with a wide range of different raster and vector geospatial formats.
 
-**The tools are already installed in this lesson**, but if you ever need to install them on your own machine you can use:
-
-- OSX: `brew install gdal`
-- Linux (Debian / Ubuntu): `sudo apt-get install gdal-bin`
+> **NOTE: the tools are already installed in this lesson**
+> ... but if you ever need to install them on your own machine you can use:
+>
+> - OSX: `brew install gdal`
+> - Linux (Debian / Ubuntu): `sudo apt-get install gdal-bin`
 
 ### Getting basic information about a geospatial data file
 
@@ -47,4 +48,4 @@ INFO: Open of `countries/ne_10m_admin_0_countries.shp'
 
 `ogrinfo` has printed a message telling us that it successfully read the file, followed by a numbered list of layers in the file. In this case, there is only a single layer, `ne_10m_admin_0_countries`, which is a [polygon]().
 
-The same `ogrinfo` command will work for the `.shx` and `.dbf` format files, but it won't work for the `.cpg` or `.prj` files. You can get a full list of the formats `ogrinfo` can read [here](http://www.gdal.org/ogr_formats.html).
+You can get a full list of the formats `ogrinfo` can read [here](http://www.gdal.org/ogr_formats.html).
