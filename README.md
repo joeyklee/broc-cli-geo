@@ -1,4 +1,4 @@
-# geo command-line bootcamp
+# prof-cli-geo
 
 Learn geo at the unix command-line by using it in your browser.
 
