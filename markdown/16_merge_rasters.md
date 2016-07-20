@@ -13,7 +13,7 @@ where:
 Give it a try here:
 
 ```
-gdalwarp sf_4269-nobhill.tif sf_4269-chinatown.tif sf_4269-downtown.tif sf-merged.tif
+gdalwarp sf_4269-nobhill-10m.tif sf_4269-chinatown-10m.tif sf_4269-downtown-10m.tif sf-merged.tif
 ```
 
 Or, to preserve nodata values:

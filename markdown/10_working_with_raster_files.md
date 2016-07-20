@@ -20,8 +20,9 @@ The result will be a slew of information on the raster including basic statistic
 
 ### Listing drivers
 
-Often times you will want to check what types of data formats gdal supports. You can access the list of these file formats using the `gdal_translate --formats` command:
+Often times you will want to check what types of data formats gdal supports. This is handy if you want to know if you can work with the raster data you've obtained. You can access the list of these file formats using the `gdal_translate --formats` command:
 
 ```
 gdal_translate --formats
 ```
+

@@ -6,13 +6,13 @@ GDAL has a suite of handy commands for working with raster data. In this module,
 * inspect raster data,
 * convert between raster formats
 * reproject rasters to different projections
-* and export a raster to Google Earth
+* export a raster to Google Earth
 
 ## Data
 
 * [San Francisco NAIP Data](ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NAIP/ca_2014/37122/m_3712213_se_10_1_20140613_20140923.jp2)
 
-## Handy Commands
+<!--## Handy Commands-->
 
 
 <!--
