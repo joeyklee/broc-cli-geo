@@ -1,6 +1,6 @@
-# prof-cli-geo
+# broc-cli-geo
 
-Learn geo at the unix command-line by using it in your browser.
+Build reproducible online computation for the commandline interface *for geo*. Learn geo at the unix command-line by using it in your browser.
 
 Tools and techniques you will learn:
 
